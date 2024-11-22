@@ -1,8 +1,7 @@
 use godot::prelude::*;
 
 mod event_depot;
-mod test;
-
+mod game_settings;
 struct RebirthCrate;
 
 #[gdextension]
@@ -12,6 +11,7 @@ unsafe impl ExtensionLibrary for RebirthCrate {
             return;
         }
         event_depot::register();
+        game_settings::register();
     }
 
     fn on_level_deinit(level: InitLevel) {
@@ -19,5 +19,6 @@ unsafe impl ExtensionLibrary for RebirthCrate {
             return;
         }
         event_depot::deregister();
+        game_settings::deregister();
     }
 }

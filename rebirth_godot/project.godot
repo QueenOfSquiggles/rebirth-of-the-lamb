@@ -8,9 +8,14 @@
 
 config_version=5
 
+[GameSettings]
+
+GraphicsSettings="res://settings/graphics.tres"
+
 [application]
 
 config/name="Rebirth Of The Lamb"
 config/description="Enter an interesting project description here!"
+run/main_scene="res://test_scene.tscn"
 config/features=PackedStringArray("4.3")
 config/icon="res://icon.png"

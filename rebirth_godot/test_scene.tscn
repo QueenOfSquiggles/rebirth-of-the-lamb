@@ -1,16 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://yi31fblrg8e1"]
+[gd_scene load_steps=4 format=3 uid="uid://yi31fblrg8e1"]
 
-[ext_resource type="Texture2D" uid="uid://xopx1yrcckge" path="res://icon.png" id="1_am1yb"]
-[ext_resource type="Script" path="res://player.gd" id="2_0r6rv"]
-[ext_resource type="EventResource" uid="uid://d4bfscmj2xfv0" path="res://TestEvent.tres" id="3_glbtw"]
+[ext_resource type="Script" path="res://test_scene.gd" id="1_206gm"]
+[ext_resource type="EventResource" uid="uid://d04wwj8epo4d" path="res://argy_event.tres" id="2_382wd"]
 
-[sub_resource type="EventArgs" id="EventArgs_l8tgk"]
-event = ExtResource("3_glbtw")
+[sub_resource type="EventArgs" id="EventArgs_o3wvh"]
+event = ExtResource("2_382wd")
+args = [true, 32, Vector2(3.14, 256)]
+resource_name = "argy_event"
 
 [node name="TestScene" type="Node2D"]
-
-[node name="Player" type="Player" parent="."]
-position = Vector2(211, 150)
-texture = ExtResource("1_am1yb")
-script = ExtResource("2_0r6rv")
-emit_hit = SubResource("EventArgs_l8tgk")
+script = ExtResource("1_206gm")
+push_event = SubResource("EventArgs_o3wvh")
