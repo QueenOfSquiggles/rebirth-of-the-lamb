@@ -6,7 +6,7 @@ pub fn register() {
     Engine::singleton().register_singleton(EventDepot::ID, &EventDepot::new_alloc());
 }
 
-pub fn deregister() {
+pub fn unregister() {
     Engine::singleton().unregister_singleton(EventDepot::ID);
 }
 

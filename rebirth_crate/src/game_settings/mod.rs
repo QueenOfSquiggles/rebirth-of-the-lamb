@@ -11,7 +11,7 @@ pub fn register() {
     Engine::singleton().register_singleton(GameSettings::ID, &GameSettings::new_alloc());
 }
 
-pub fn deregister() {
+pub fn unregister() {
     Engine::singleton().unregister_singleton(GameSettings::ID);
 }
 

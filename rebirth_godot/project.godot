@@ -16,6 +16,10 @@ GraphicsSettings="res://settings/graphics.tres"
 
 config/name="Rebirth Of The Lamb"
 config/description="Enter an interesting project description here!"
-run/main_scene="res://test_scene.tscn"
+run/main_scene="res://level/main_level.tscn"
 config/features=PackedStringArray("4.3")
 config/icon="res://icon.png"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/terrain_3d/plugin.cfg")
