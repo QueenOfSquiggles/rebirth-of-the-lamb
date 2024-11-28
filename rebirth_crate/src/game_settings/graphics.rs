@@ -1,6 +1,8 @@
 use godot::classes::viewport::{Msaa, ScreenSpaceAa};
-use godot::classes::{CameraAttributes, Engine, Environment, SceneTree, Viewport};
+use godot::classes::{CameraAttributes, Environment, Viewport};
 use godot::prelude::*;
+
+use crate::engine_helpers::engine;
 
 #[derive(Debug, GodotClass)]
 #[class(base=Resource, tool)]
@@ -124,17 +126,7 @@ impl GraphicsSettings {
 }
 
 fn get_graphics_targets() -> Option<(Gd<Viewport>, Gd<Environment>, Gd<CameraAttributes>)> {
-    let Some(main) = Engine::singleton().get_main_loop() else {
-        return None;
-    };
-    let Ok(tree) = main.try_cast::<SceneTree>() else {
-        godot_error!("It is possible that a custom MainLoop is in use that does not derive from SceneTree. This is not supported by my rust code :/");
-        return None;
-    };
-    let Some(window) = tree.get_root() else {
-        return None;
-    };
-    let Some(viewport) = window.get_viewport() else {
+    let Some(viewport) = engine::get_viewport() else {
         return None;
     };
     let Some(world) = viewport.get_world_3d() else {

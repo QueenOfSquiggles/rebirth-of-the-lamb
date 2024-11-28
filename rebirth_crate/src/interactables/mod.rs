@@ -5,7 +5,7 @@ use godot::{
     prelude::*,
 };
 
-use crate::component_utils::ComponentsRs;
+use crate::component_utils::{RustyComponent, RustyComponents};
 
 #[derive(Debug, GodotClass)]
 #[class(base=RayCast3D, init)]
@@ -29,14 +29,14 @@ impl IRayCast3D for Interactor {
         }
         if let Some(last) = self.last_interaction.clone() {
             if let Some(mut interact) =
-                ComponentsRs::get_component::<InteractionComponent>(&last.upcast())
+                RustyComponents::get_component::<InteractionComponent>(&last.upcast())
             {
                 interact.emit_signal(InteractionComponent::SIGNAL_DESELECT, &[]);
             }
         }
         if let Some(new) = option_collider.clone() {
             if let Some(mut interact) =
-                ComponentsRs::get_component::<InteractionComponent>(&new.upcast())
+                RustyComponents::get_component::<InteractionComponent>(&new.upcast())
             {
                 interact.emit_signal(InteractionComponent::SIGNAL_SELECT, &[]);
             }
@@ -53,7 +53,7 @@ impl Interactor {
             return false;
         };
         let Some(mut interact) =
-            ComponentsRs::get_component::<InteractionComponent>(&node.clone().upcast())
+            RustyComponents::get_component::<InteractionComponent>(&node.clone().upcast())
         else {
             return false;
         };
@@ -62,15 +62,27 @@ impl Interactor {
 }
 
 #[derive(Debug, GodotClass)]
-#[class(base=Node, init)]
+#[class(base=Node3D, init)]
 /// A component for creating an interactable object
-struct InteractionComponent {}
+struct InteractionComponent {
+    base: Base<Node3D>,
+}
+
+impl RustyComponent<Node3D> for InteractionComponent {}
+
+#[godot_api]
+impl INode3D for InteractionComponent {
+    fn ready(&mut self) {
+        self.on_ready();
+    }
+}
 
 #[godot_api]
 impl InteractionComponent {
     pub const SIGNAL_SELECT: &'static str = "on_select";
     pub const SIGNAL_DESELECT: &'static str = "on_deselect";
     pub const SIGNAL_INTERACT: &'static str = "on_interact";
+
     #[signal]
     /// Emitted when the player is first able to interact but hasn't
     pub fn on_select() {}
