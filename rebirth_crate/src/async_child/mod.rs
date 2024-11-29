@@ -84,7 +84,7 @@ impl INode for AsyncChild {
         if !self.awaiting_load {
             return;
         }
-        let mut progress = Array::<Variant>::new();
+        let progress = Array::<Variant>::new();
         let status = ResourceLoader::singleton()
             .load_threaded_get_status_ex(&self.scene)
             .progress(&varray![progress])
@@ -121,28 +121,6 @@ impl AsyncChild {
     #[signal]
     /// Emitted after the async scene managed by this node is unloaded
     pub fn scene_unloaded() {}
-
-    fn delayed_start(&mut self) {
-        match self.mode {
-            InstanceMode::Custom => (), // do nothing
-            InstanceMode::OnSelfReady => {
-                self.load_scene(true);
-            }
-            InstanceMode::OnParentReady => {
-                let Some(mut parent) = self.base_mut().get_parent() else {
-                    return;
-                };
-                parent
-                    .connect_ex(
-                        "ready",
-                        &Callable::from_object_method(&self.to_gd(), "load_scene")
-                            .bindv(&varray![true]),
-                    )
-                    .flags((ConnectFlags::DEFERRED.ord() | ConnectFlags::ONE_SHOT.ord()) as u32)
-                    .done();
-            }
-        }
-    }
 
     #[func]
     pub fn has_instance(&self) -> bool {
