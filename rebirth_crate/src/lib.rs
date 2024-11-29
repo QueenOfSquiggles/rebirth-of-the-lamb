@@ -1,11 +1,13 @@
 use godot::prelude::*;
 
+mod async_child;
 mod component_utils;
 mod engine_helpers;
 mod event_depot;
 mod game_settings;
 mod godot_impls;
 mod interactables;
+
 struct RebirthCrate;
 
 #[gdextension]
