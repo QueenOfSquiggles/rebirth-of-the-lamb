@@ -17,13 +17,22 @@ struct Interactor {
 #[godot_api]
 impl IRayCast3D for Interactor {
     fn physics_process(&mut self, _delta: f64) {
-        let option_collider =
-            self.base()
-                .get_collider()
-                .and_then(|coll| match coll.try_cast::<Node3D>() {
-                    Ok(node) => Some(node),
-                    Err(_) => None,
-                });
+        let option_collider = self
+            .base()
+            .get_collider()
+            .and_then(|coll| match coll.try_cast::<Node3D>() {
+                Ok(node) => Some(node),
+                Err(_) => None,
+            })
+            .and_then(|n3d| {
+                if RustyComponents::get_component::<InteractionComponent>(&n3d.clone().upcast())
+                    .is_some()
+                {
+                    Some(n3d)
+                } else {
+                    None
+                }
+            });
         if option_collider == self.last_interaction {
             return;
         }
@@ -42,11 +51,17 @@ impl IRayCast3D for Interactor {
             }
         }
         self.last_interaction = option_collider;
+        let inter_var = self.last_interaction.to_variant();
+        self.base_mut()
+            .emit_signal("interactable_changed", &[inter_var]);
     }
 }
 
 #[godot_api]
 impl Interactor {
+    #[signal]
+    fn interactable_changed(interactable: Option<Gd<Node>>) {}
+
     #[func]
     fn do_interact(&self) -> bool {
         let Some(node) = &self.last_interaction else {

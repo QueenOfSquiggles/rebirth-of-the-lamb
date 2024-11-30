@@ -7,7 +7,7 @@ mod event_depot;
 mod game_settings;
 mod godot_impls;
 mod interactables;
-
+mod state_machine;
 struct RebirthCrate;
 
 #[gdextension]

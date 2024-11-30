@@ -1,6 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bgkwbc6n2fkxk"]
+[gd_scene load_steps=5 format=3 uid="uid://bgkwbc6n2fkxk"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_8e1fu"]
+[ext_resource type="Script" path="res://scenes/player/state_walking.gd" id="2_pbwl2"]
+[ext_resource type="Script" path="res://scenes/player/cutscene.gd" id="3_ht7nn"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_n05jt"]
 
@@ -18,3 +20,12 @@ current = true
 target_position = Vector3(0, 0, -3)
 hit_back_faces = false
 debug_shape_custom_color = Color(1, 1, 1, 1)
+
+[node name="FiniteStateMachine" type="FiniteStateMachine" parent="."]
+entry = NodePath("Walking")
+
+[node name="Walking" type="StateMachineState" parent="FiniteStateMachine"]
+script = ExtResource("2_pbwl2")
+
+[node name="Cutscene" type="StateMachineState" parent="FiniteStateMachine"]
+script = ExtResource("3_ht7nn")

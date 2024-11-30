@@ -1,4 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://dlcqs6fqwki6l"]
+[gd_scene load_steps=4 format=3 uid="uid://dlcqs6fqwki6l"]
+
+[ext_resource type="Script" path="res://scenes/example_scene.gd" id="1_yxh04"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_3ghwb"]
 
@@ -6,9 +8,16 @@
 points = PackedVector3Array(-0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5)
 
 [node name="ExampleScene" type="RigidBody3D"]
+script = ExtResource("1_yxh04")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_3ghwb")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("ConvexPolygonShape3D_pkqik")
+
+[node name="InteractionComponent" type="InteractionComponent" parent="."]
+
+[connection signal="on_deselect" from="InteractionComponent" to="." method="_on_interaction_component_on_deselect"]
+[connection signal="on_interact" from="InteractionComponent" to="." method="_on_interaction_component_on_interact"]
+[connection signal="on_select" from="InteractionComponent" to="." method="_on_interaction_component_on_select"]
