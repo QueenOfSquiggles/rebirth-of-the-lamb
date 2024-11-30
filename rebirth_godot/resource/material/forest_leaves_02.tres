@@ -1,0 +1,11 @@
+[gd_resource type="ORMMaterial3D" load_steps=4 format=3 uid="uid://dgnuwgpp5e3ih"]
+
+[ext_resource type="Texture2D" uid="uid://cynxfvwkbitdm" path="res://resource/texture/forest_leaves_02_diffuse_1k.jpg" id="1_syqo5"]
+[ext_resource type="Texture2D" uid="uid://dtaktpdqspcfh" path="res://resource/texture/forest_leaves_02_nor_gl_1k.jpg" id="2_blt3k"]
+[ext_resource type="Texture2D" uid="uid://b24v1gih8jtbi" path="res://resource/texture/forest_leaves_02_arm_1k.jpg" id="3_v5oqg"]
+
+[resource]
+albedo_texture = ExtResource("1_syqo5")
+orm_texture = ExtResource("3_v5oqg")
+normal_enabled = true
+normal_texture = ExtResource("2_blt3k")

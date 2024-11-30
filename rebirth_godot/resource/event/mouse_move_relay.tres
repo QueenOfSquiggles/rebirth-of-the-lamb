@@ -1,0 +1,4 @@
+[gd_resource type="EventResource" format=3 uid="uid://e8qvtsyk4rsi"]
+
+[resource]
+args = [Vector2(0, 0)]

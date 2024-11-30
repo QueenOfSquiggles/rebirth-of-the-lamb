@@ -8,13 +8,9 @@ extends StateMachineState
 @export var JUMP_VELOCITY := 4.5
 @export var look_angle_limit := 75.0
 
-var mouse_delta := Vector2.ZERO
-
 func _state_enter() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-
-func _state_exit() -> void:
-	pass
+	player.mouse_delta = Vector2.ZERO
 
 func _state_physics(delta: float) -> void:
 	_move_cam(delta)
@@ -22,7 +18,7 @@ func _state_physics(delta: float) -> void:
 	if not player.is_on_floor():
 		player.velocity += player.get_gravity() * delta
 
-	if Input.is_action_just_pressed("jump") and player.is_on_floor():
+	if Input.is_action_pressed("jump") and player.is_on_floor() and player.velocity.y <= 0.0:
 		player.velocity.y = JUMP_VELOCITY
 
 	# Get the input direction and handle the movement/deceleration.
@@ -44,20 +40,21 @@ func _state_physics(delta: float) -> void:
 
 
 func _state_input(event: InputEvent) -> bool:
-	if event is InputEventMouseMotion:
-		var mouse = event as InputEventMouseMotion
-		mouse_delta += mouse.relative
-		return true
 	if event.is_action_pressed("interact"):
 		interactor.do_interact()
+	if event.is_action_pressed("escape"):
+		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		else:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	return false
 
 
 func _move_cam(delta: float):
 	var look_vec := Input.get_vector("look_left", "look_right", "look_down", "look_up")
 	if look_vec.length_squared() < 0.3:
-		look_vec = mouse_delta # mul mouse sensitivity
-		mouse_delta = Vector2.ZERO
+		look_vec = player.mouse_delta # mul mouse sensitivity
+		player.mouse_delta = Vector2.ZERO
 	else:
 		look_vec *= 10.0 # gamepad sensitivity
 	look_vec *= -1

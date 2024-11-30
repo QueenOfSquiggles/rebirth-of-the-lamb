@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=3 uid="uid://sgpn2k5a4afl"]
+
+[ext_resource type="Material" uid="uid://bameswxn5ntnm" path="res://resource/material/retro_pbr_screen.tres" id="1_ccamw"]
+[ext_resource type="Script" path="res://scripts/mouse_motion_relay.gd" id="1_fyfdq"]
+[ext_resource type="PackedScene" uid="uid://ydjx42tps6hu" path="res://level/main_level.tscn" id="1_xaaty"]
+[ext_resource type="EventResource" uid="uid://e8qvtsyk4rsi" path="res://resource/event/mouse_move_relay.tres" id="2_uf8c0"]
+
+[node name="VisualProcessing" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="MouseMotionRelay" type="Node" parent="."]
+script = ExtResource("1_fyfdq")
+mouse_motion_event = ExtResource("2_uf8c0")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+texture_filter = 1
+material = ExtResource("1_ccamw")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+stretch_shrink = 3
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+audio_listener_enable_3d = true
+size = Vector2i(384, 216)
+render_target_update_mode = 4
+
+[node name="MainLevel" parent="SubViewportContainer/SubViewport" instance=ExtResource("1_xaaty")]
+
+[node name="HUD" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1

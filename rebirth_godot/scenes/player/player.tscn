@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://bgkwbc6n2fkxk"]
+[gd_scene load_steps=6 format=3 uid="uid://bgkwbc6n2fkxk"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_8e1fu"]
+[ext_resource type="EventResource" uid="uid://e8qvtsyk4rsi" path="res://resource/event/mouse_move_relay.tres" id="2_mms7v"]
 [ext_resource type="Script" path="res://scenes/player/state_walking.gd" id="2_pbwl2"]
 [ext_resource type="Script" path="res://scenes/player/cutscene.gd" id="3_ht7nn"]
 
@@ -8,6 +9,7 @@
 
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_8e1fu")
+mouse_motion_relay_event = ExtResource("2_mms7v")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_n05jt")
